@@ -3,5 +3,6 @@
  }
  body{
   height:100vh;
-  background-image: linear-gradient(#D8C7FF,rgb(2, 2, 53));
+  background-image: linear-gradient(#D8C7FF,#19006c);
+  font-family: "poppins";
  }

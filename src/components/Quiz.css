@@ -48,3 +48,11 @@ cursor: pointer;
     margin: auto;
     font-size: 18px;
 }
+.container .correct {
+    background: #dffff2;
+    border-color: #25a5d8;
+}
+.container  .wrong{
+    background: #FFEBEB;
+    border-color: #ff4A4a;
+}
