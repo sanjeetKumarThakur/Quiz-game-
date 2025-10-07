@@ -6,7 +6,8 @@ const Quiz = () => {
   const [index, setIndex] = useState(0);
   const [lock, setLock] = useState(false);
   const [score, setScore] = useState(0);
-  const [result, setResult] = useState(false); // Add result state
+  const [result, setResult] = useState(false);
+  const [error, setError] = useState(""); // For error message
 
   const option1 = useRef(null);
   const option2 = useRef(null);
@@ -18,6 +19,7 @@ const Quiz = () => {
 
   const checkAns = (e, ans) => {
     if (!lock) {
+      setError(""); // Clear error on selection
       if (question.ans === ans) {
         e.target.classList.add("correct");
         setScore((prev) => prev + 1);
@@ -30,22 +32,25 @@ const Quiz = () => {
   };
 
   const next = () => {
-    if (lock) {
-      if (index + 1 < data.length) {
-        // ✅ Correctly go to next question
-        setIndex((prev) => prev + 1);
-        setLock(false);
+    if (!lock) {
+      setError("Please choose an option before clicking Next.");
+      return;
+    }
+    if (index + 1 < data.length) {
+      // ✅ Correctly go to next question
+      setIndex((prev) => prev + 1);
+      setLock(false);
+      setError("");
 
-        // reset options styling
-        option_array.forEach((opt) => {
-          if (opt.current) {
-            opt.current.classList.remove("correct", "wrong");
-          }
-        });
-      } else {
-        // ✅ End of quiz
-        setResult(true); // Show result screen
-      }
+      // reset options styling
+      option_array.forEach((opt) => {
+        if (opt.current) {
+          opt.current.classList.remove("correct", "wrong");
+        }
+      });
+    } else {
+      // ✅ End of quiz
+      setResult(true); // Show result screen
     }
   };
 
@@ -54,6 +59,7 @@ const Quiz = () => {
     setScore(0);
     setLock(false);
     setResult(false);
+    setError("");
     option_array.forEach((opt) => {
       if (opt.current) {
         opt.current.classList.remove("correct", "wrong");
@@ -87,6 +93,18 @@ const Quiz = () => {
           </ul>
 
           <button onClick={next}>Next</button>
+          {error && (
+            <div
+              style={{
+                color: "#ff4A4a",
+                textAlign: "center",
+                marginTop: "8px",
+                fontSize: "15px",
+              }}
+            >
+              {error}
+            </div>
+          )}
           <div className="index">
             {index + 1} of {data.length} questions
           </div>

@@ -1,6 +1,11 @@
 *{
   margin: 0;
  }
+ html, body {
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+ }
  body{
   min-height: 100vh;
   background-image: linear-gradient(#D8C7FF,#19006c);
